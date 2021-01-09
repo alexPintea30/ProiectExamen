@@ -1,0 +1,78 @@
+﻿@page "/{id:int?}"
+@model Project.Pages.Aliens.IndexModel
+
+@{
+    ViewData["Title"] = "Index";
+}
+
+<h1>Index</h1>
+
+<p>
+    <a asp-page="Create">Create New</a>
+</p>
+<table class="table">
+    <thead>
+        <tr>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].Name)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].Age)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].Color)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].ArrivedOnEarth)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].Planet.PlanetName)
+            </th>
+            <th>
+                @Html.DisplayNameFor(model => model.Alien[0].AlienTeams)
+            </th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+@foreach (var item in Model.AlienD.Aliens) {
+
+    string selectedRow = "";
+    if (item.ID == Model.AlienID)
+    {
+        selectedRow = "table-success";
+    }
+        <tr class="@selectedRow">
+            <td>
+                @Html.DisplayFor(modelItem => item.Name)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Age)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Color)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.ArrivedOnEarth)
+            </td>
+            <td>
+                @Html.DisplayFor(modelItem => item.Planet.PlanetName)
+            </td>
+            <td>
+                @{
+                    foreach (var team in item.AlienTeams)
+                    {
+                        @team.Team.ID @: @team.Team.TeamName <br />
+                    }
+                }
+            </td>
+
+            <td>
+                <a asp-page="./Edit" asp-route-id="@item.ID">Edit</a> |
+                <a asp-page="./Details" asp-route-id="@item.ID">Details</a> |
+                <a asp-page="./Delete" asp-route-id="@item.ID">Delete</a>
+            </td>
+        </tr>
+}
+    </tbody>
+</table>
